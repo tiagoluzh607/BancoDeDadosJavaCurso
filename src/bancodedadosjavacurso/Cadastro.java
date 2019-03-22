@@ -5,6 +5,14 @@
  */
 package bancodedadosjavacurso;
 
+import dao.Conexao;
+import dao.UsuarioDAO;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Usuario;
+
 /**
  *
  * @author tiago
@@ -50,6 +58,11 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel3.setText("Cadastro");
 
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,6 +114,25 @@ public class Cadastro extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Usuario usuario = new Usuario();
+        usuario.setUsuario("Alexandre");
+        usuario.setSenha("12345");
+        
+        Connection conexao;
+        try {
+            conexao = new Conexao().getConnection();
+            UsuarioDAO usuariodao = new UsuarioDAO(conexao);
+            usuariodao.insert(usuario);
+            
+            conexao.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Cadastro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
